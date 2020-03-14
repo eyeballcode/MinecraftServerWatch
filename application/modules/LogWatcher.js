@@ -13,7 +13,7 @@ module.exports = class LogWatcher extends EventEmitter {
 
     this.logTail.on('line', line => {
       line = line.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '').trim()
-      line = line.replace(/^> \r/, '') // backspace
+      line = line.replace(/^> \r?/, '').trim() // backspace
 
       let lineParts = line.match(/^\[(.*?)\] \[(.*?)\/(.*?)\] \[(.*?)\]: (.+)/)
       let match, time, thread, level, mod, message

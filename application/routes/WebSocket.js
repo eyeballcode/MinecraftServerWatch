@@ -1,7 +1,7 @@
 const Index = require('./Index')
 const ws = require('ws')
 
-let { logWatcher } = Index
+let { logWatcher, playerWatcher } = Index
 
 let wss
 
@@ -34,4 +34,8 @@ module.exports.setupWS = function(server) {
       type: 'log-reset'
     })
   })
+
+  playerWatcher.on('player-joined', player => broadcast({ type: 'player-joined', player }))
+  playerWatcher.on('player-left', player => broadcast({ type: 'player-left', player }))
+
 }

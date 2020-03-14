@@ -20,9 +20,19 @@
   height: 10%;
 }
 
+#players {
+  height: 20%;
+}
+
+#graphs {
+  height: 80%;
+}
+
 #log-text {
   height: 100%;
   overflow-y: scroll;
+
+  background-color: #1e1e1e;
 }
 
 #log-text p {
@@ -36,10 +46,22 @@
   font-size: calc(0.5vw + 0.5vw);
 }
 
+#log-text p:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+#log-text p:nth-child(odd) {
+  background-color: #202020;
+}
+
 #log-text p.warn {
   color: yellow;
 }
 
 #log-text p.error {
   color: red;
+}
+
+#log-text p.chat {
+  color: lightblue;
 }

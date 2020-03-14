@@ -1,5 +1,6 @@
 $.ready(() => {
   let logPre = $('#log-text')
+  let players = []
 
   function addLine(line) {
     let span = document.createElement('p')
@@ -7,6 +8,10 @@ $.ready(() => {
     let text = line.thread ? `[${line.time}] [${line.thread}/${line.level}]: ${line.message}` : line.message
     span.textContent = text
     span.className = line.level.toLowerCase()
+
+    if (line.message.match(/^<.*> .+/)) {
+      span.className = 'chat'
+    }
 
     let autoScroll = logPre.scrollHeight - logPre.scrollTop - logPre.clientHeight < 1
     logPre.appendChild(span)
@@ -27,6 +32,14 @@ $.ready(() => {
     $(':last-child', logPre).scrollIntoView()
   })
 
+  $.ajax({
+    method: 'GET',
+    url: '/players'
+  }, (err, status, data) => {
+    players = data
+    $('#player-list').textContent = players.join(', ')
+  })
+
   function wsListener(data) {
     data = JSON.parse(data.data)
 
@@ -37,12 +50,22 @@ $.ready(() => {
     if (data.type === 'log-reset') {
       logPre.innerHTML = ''
     }
+
+    if (data.type === 'player-joined') {
+      players.push(data.player)
+      $('#player-list').textContent = players.join(', ')
+    }
+
+    if (data.type === 'player-left') {
+      players.splice(players.indexOf(data.player), 1)
+      $('#player-list').textContent = players.join(', ')
+    }
   }
 
   let websocketPath = location.protocol.replace('http', 'ws') + '//' + location.host
   let websocket
 
-  function recreate() {
+  function recreate(timeout=5000) {
     websocket = null
     setTimeout(() => {
       try {
@@ -53,8 +76,8 @@ $.ready(() => {
       } catch (e) {
         recreate()
       }
-    }, 5000)
+    }, timeout)
   }
 
-  recreate()
+  recreate(0)
 })
