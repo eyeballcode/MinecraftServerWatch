@@ -3,16 +3,23 @@ const router = new express.Router()
 
 const LogWatcher = require('../modules/LogWatcher')
 const PlayerWatcher = require('../modules/PlayerWatcher')
+const ServerStatus = require('../modules/ServerStatus')
 
 let logWatcher = new LogWatcher(config.logfile)
 let playerWatcher = new PlayerWatcher(logWatcher)
+let serverStatus = new ServerStatus(config.server, config.serverPort, 5000)
 
 router.get('/full-log', (req, res) => {
-  res.end(JSON.stringify(logWatcher.getFullLog()))
+  res.json(logWatcher.getFullLog())
 })
 
 router.get('/players', (req, res) => {
-  res.end(JSON.stringify(playerWatcher.getPlayers()))
+  res.json(playerWatcher.getPlayers())
+})
+
+router.get('/ping', async (req, res) => {
+  await serverStatus.connect()
+  res.json(serverStatus.stats)
 })
 
 router.get('/', (req, res) => {

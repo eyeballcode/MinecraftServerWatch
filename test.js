@@ -1,13 +1,24 @@
-const config = require('./config.json')
-const Tail = require('always-tail')
+// const config = require('./config.json')
+// const Tail = require('always-tail')
+//
+// let logTail = new Tail(config.logfile, '\n', {
+//   interval: 100,
+//   start: 0
+// })
+//
+// logTail.on('line', line => {
+//   console.log(line)
+// })
+//
+// logTail.watch()
 
-let logTail = new Tail(config.logfile, '\n', {
-  interval: 100,
-  start: 0
-})
+let ServerStatus = require('./application/modules/ServerStatus')
 
-logTail.on('line', line => {
-  console.log(line)
-})
+async function m() {
+  let s = new ServerStatus('jmss-mc.transportsg.me', 25565, 5000)
+  await s.connect()
 
-logTail.watch()
+  console.log(s.getMOTD())
+}
+
+m()

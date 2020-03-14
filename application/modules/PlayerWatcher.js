@@ -19,6 +19,10 @@ module.exports = class LogWatcher extends EventEmitter {
         }
       }
     })
+
+    logWatcher.on('truncated', line => {
+      this.players = []
+    })
   }
 
   getPlayers() {

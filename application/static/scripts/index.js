@@ -49,6 +49,7 @@ $.ready(() => {
 
     if (data.type === 'log-reset') {
       logPre.innerHTML = ''
+      $('#player-list').textContent = ''
     }
 
     if (data.type === 'player-joined') {
@@ -68,16 +69,12 @@ $.ready(() => {
   function recreate(timeout=5000) {
     websocket = null
     setTimeout(() => {
-      try {
-        websocket = new WebSocket(websocketPath)
+      websocket = new WebSocket(websocketPath)
 
-        websocket.onclose = recreate
-        websocket.addEventListener('message', wsListener)
-      } catch (e) {
-        recreate()
-      }
+      websocket.onclose = () => {recreate()}
+      websocket.addEventListener('message', wsListener)
     }, timeout)
   }
 
-  recreate(0)
+  recreate(1)
 })
