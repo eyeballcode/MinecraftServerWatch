@@ -7,7 +7,7 @@ const ServerStatus = require('../modules/ServerStatus')
 
 let logWatcher = new LogWatcher(config.logfile)
 let playerWatcher = new PlayerWatcher(logWatcher)
-let serverStatus = new ServerStatus(config.server, config.serverPort, 5000)
+let serverStatus = new ServerStatus(config.server, parseInt(config.serverPort), 5000)
 
 router.get('/full-log', (req, res) => {
   res.json(logWatcher.getFullLog())
