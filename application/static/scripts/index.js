@@ -8,11 +8,11 @@ $.ready(() => {
     span.textContent = text
     span.className = line.level.toLowerCase()
 
-    let autoScroll = logPre.scrollTop == logPre.scrollTopMax
+    let autoScroll = logPre.scrollHeight - logPre.scrollTop - logPre.clientHeight < 1
     logPre.appendChild(span)
 
     if (autoScroll) {
-      logPre.scrollTop = logPre.scrollTopMax
+      $(':last-child', logPre).scrollIntoView()
     }
   }
 
@@ -24,7 +24,7 @@ $.ready(() => {
       addLine(line)
     })
 
-    logPre.scrollTop = logPre.scrollTopMax
+    $(':last-child', logPre).scrollIntoView()
   })
 
   function wsListener(data) {
@@ -34,7 +34,7 @@ $.ready(() => {
       addLine(data.line)
     }
 
-    if (data.type === 'log-truncated') {
+    if (data.type === 'log-reset') {
       logPre.innerHTML = ''
     }
   }

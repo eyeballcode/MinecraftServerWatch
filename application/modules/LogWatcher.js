@@ -42,6 +42,7 @@ module.exports = class LogWatcher extends EventEmitter {
     })
 
     this.logTail.on('truncated', () => {
+      this.fullLog = []
       this.emit('truncated')
     })
 
