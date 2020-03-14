@@ -2,6 +2,10 @@
   display: flex;
 }
 
+h3, pre {
+  margin: 0;
+}
+
 #left {
   width: 50vw;
   height: calc(100vh - (4vw + 4vh));
@@ -13,19 +17,19 @@
 }
 
 #log {
-  height: 90%;
+  height: calc(0.9 * (100vh - (4vw + 4vh)));
 }
 
 #rcon {
-  height: 10%;
+  height: calc(0.1 * (100vh - (4vw + 4vh)));
 }
 
 #players {
-  height: 20%;
+  height: calc(0.2 * (100vh - (4vw + 4vh)));
 }
 
 #graphs {
-  height: 80%;
+  height: calc(0.8 * (100vh - (4vw + 4vh)));
 }
 
 #log-text {
