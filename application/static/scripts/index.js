@@ -49,6 +49,7 @@ $.ready(() => {
 
     if (data.type === 'log-reset') {
       logPre.innerHTML = ''
+      players = []
       $('#player-list').textContent = ''
     }
 
@@ -77,4 +78,19 @@ $.ready(() => {
   }
 
   recreate(1)
+
+  $('#rcon-command').on('keydown', e => {
+    console.log(e.keyCode)
+    if(e.keyCode == 13) {
+      let password = $('#rcon-password').value
+      let command = $('#rcon-command').value
+      $.ajax({
+        method: 'POST',
+        url: '/rcon',
+        data: {
+          password, command
+        }
+      })
+     }
+  })
 })
