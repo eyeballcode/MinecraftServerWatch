@@ -26,9 +26,14 @@ router.get('/ping', async (req, res) => {
 router.post('/rcon', async (req, res) => {
   let { password, command } = req.body
   let rcon = new RCON()
-  await rcon.connect(config.server, config.rconPort, password)
-  await rcon.send(command)
-  await rcon.end()
+  try {
+    await rcon.connect(config.server, config.rconPort, password)
+    await rcon.send(command)
+    await rcon.end()
+    res.json({message: 'ok'})
+  } catch (e) {
+    res.json({message: 'not ok'})
+  }
 })
 
 router.get('/', (req, res) => {
