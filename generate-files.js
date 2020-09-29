@@ -69,7 +69,7 @@ function hashFile(path) {
 let filesBase = path.join(__dirname, 'files')
 
 walk(filesBase, async (err, results) => {
-  let files = await async.map(results, async file => {
+  let files = (await async.map(results, async file => {
     if (file.includes('files.json')) return null
     if (file.includes('folders.json')) return null
 
@@ -78,13 +78,14 @@ walk(filesBase, async (err, results) => {
 
     let parts = relativePath.split('/')
     let type = parts.shift()
+    if (type === 'mods') type = 'mod'
 
     return {
       type,
       path: parts.join('/'),
       hash
     }
-  })
+  })).filter(Boolean)
 
   fs.writeFileSync(path.join(filesBase, 'files.json'), JSON.stringify(files))
 })
