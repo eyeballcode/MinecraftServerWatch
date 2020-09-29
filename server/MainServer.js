@@ -95,6 +95,7 @@ module.exports = class MainServer {
   async configRoutes (app) {
     const routers = {
       Index: '/',
+      ModdedFileHost: '/rails'
     }
 
     Object.keys(routers).forEach(routerName => {
