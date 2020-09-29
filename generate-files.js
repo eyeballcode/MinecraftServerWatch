@@ -78,7 +78,6 @@ walk(filesBase, async (err, results) => {
 
     let parts = relativePath.split('/')
     let type = parts.shift()
-    if (type === 'mods') type = 'mod'
 
     return {
       type,
