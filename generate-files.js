@@ -72,6 +72,8 @@ walk(filesBase, async (err, results) => {
   let files = (await async.map(results, async file => {
     if (file.includes('files.json')) return null
     if (file.includes('folders.json')) return null
+    if (file.includes('gamedata.json')) return null
+    if (file.toLowerCase().includes('ds_store')) return null
 
     let hash = await hashFile(file)
     let relativePath = file.replace(filesBase, '').slice(1)
