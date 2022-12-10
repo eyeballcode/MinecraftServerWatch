@@ -11,9 +11,9 @@
   "dependencies": {
     "always-tail": "^0.2.0",
     "async": "^3.2.0",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "compression": "^1.7.4",
-    "express": "^5.0.0-alpha.7",
+    "express": "^5.0.0-beta.1",
     "express-minify": "^1.0.0",
     "pug": "^2.0.4",
     "querystring": "^0.2.0",
